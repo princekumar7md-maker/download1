@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Required</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px;
+            max-width: 800px;
+            width: 100%;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        h2 {
+            color: #444;
+            margin: 30px 0 15px;
+            font-size: 24px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .article-section {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .article-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .article-content {
+            line-height: 1.8;
+            color: #555;
+            margin: 15px 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Verify Button - Pulse Animation */
+        .btn-verify {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            }
+        }
+
+        .btn-verify:hover {
+            animation: none;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Continue Button - Bounce Animation */
+        .btn-continue {
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .btn-continue:hover {
+            animation: none;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Download Button - Gradient Shift + Glow Animation */
+        .btn-download {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background-size: 200% 200%;
+            font-size: 20px;
+            padding: 18px 50px;
+            animation: gradientShift 3s ease infinite, glow 2s ease-in-out infinite;
+            box-shadow: 0 5px 20px rgba(240, 147, 251, 0.5);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(240, 147, 251, 0.5);
+            }
+            50% {
+                box-shadow: 0 10px 40px rgba(240, 147, 251, 0.8), 0 0 20px rgba(245, 87, 108, 0.6);
+            }
+        }
+
+        .btn-download:hover {
+            animation: gradientShift 3s ease infinite, glowHover 0.5s ease-in-out infinite;
+            transform: scale(1.05) translateY(-3px);
+        }
+
+        @keyframes glowHover {
+            0%, 100% {
+                box-shadow: 0 15px 50px rgba(240, 147, 251, 0.8);
+            }
+            50% {
+                box-shadow: 0 20px 60px rgba(245, 87, 108, 1), 0 0 30px rgba(240, 147, 251, 0.8);
+            }
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .loader-container {
+            display: none;
+            margin: 40px 0;
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #667eea;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .timer {
+            font-size: 24px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .continue-section {
+            display: none;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .progress {
+            margin-bottom: 30px;
+        }
+
+        .progress-text {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .download-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .download-section h2 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .download-section p {
+            color: #ffe6e6;
+        }
+
+        /* Shimmer effect for download icon */
+        .download-icon {
+            display: inline-block;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                transform: rotate(-10deg) scale(1.1);
+            }
+            50% {
+                transform: rotate(10deg) scale(1.2);
+            }
+            75% {
+                transform: rotate(-10deg) scale(1.1);
+            }
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="progress">
+            <div class="progress-text">Step <span id="currentStep">1</span> of 4</div>
+        </div>
+        
+        <div class="icon">🔒</div>
+        
+        <h1 id="mainTitle">Verification Required</h1>
+        <p id="mainDescription">Please complete the verification process to continue. Click the button below to verify your identity.</p>
+        
+        <!-- Article Section (Admin can edit this) -->
+        <div class="article-section" id="articleSection">
+            <h2 id="articleTitle">Welcome to Our Service</h2>
+            <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=400&fit=crop" alt="Article Image" class="article-image" id="articleImage">
+            <div class="article-content" id="articleContent">
+                <p>This is a secure verification system designed to protect your account and ensure safe access to our services. Our multi-step verification process helps prevent unauthorized access and keeps your information secure.</p>
+                <p>Each verification step is important and helps us confirm your identity. Please follow all the steps carefully to complete the process successfully.</p>
+            </div>
+        </div>
+        
+        <button class="btn btn-verify" id="verifyBtn" onclick="startVerification()">Verify Now</button>
+        
+        <div class="loader-container" id="loaderContainer">
+            <div class="loader"></div>
+            <div class="timer" id="timer">5</div>
+            <p>Processing verification...</p>
+        </div>
+        
+        <div class="continue-section" id="continueSection">
+            <div class="icon">✅</div>
+            <h2 style="color: #27ae60; margin-bottom: 15px;">Verification Complete!</h2>
+            <p>Click continue to proceed to the next step.</p>
+            <button class="btn btn-continue" onclick="nextPage()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // =====================================================
+        // ADMIN CONFIGURATION - EDIT THESE VALUES
+        // =====================================================
+        
+        // External Links Configuration
+        const EXTERNAL_LINKS = {
+            link1: 'https://example.com/verify1',
+            link2: 'https://example.com/verify2',
+            link3: 'https://example.com/verify3',
+            link4: 'https://example.com/verify2',
+            link5: 'https://example.com/download'  // Download link for final page
+        };
+
+        // Timer Configuration (in seconds)
+        const COUNTDOWN_TIME = 5;
+
+        // Article Content Configuration for Each Page
+        const PAGE_CONTENT = {
+            1: {
+                title: 'Welcome to Our Service',
+                description: 'Please complete the verification process to continue. Click the button below to verify your identity.',
+                articleTitle: 'Security First Approach',
+                articleImage: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=400&fit=crop',
+                articleContent: `
+                    <p>This is a secure verification system designed to protect your account and ensure safe access to our services. Our multi-step verification process helps prevent unauthorized access and keeps your information secure.</p>
+                    <p>Each verification step is important and helps us confirm your identity. Please follow all the steps carefully to complete the process successfully.</p>
+                `
+            },
+            2: {
+                title: 'Second Verification Step',
+                description: 'Second verification step. Please verify to continue.',
+                articleTitle: 'Enhanced Security Features',
+                articleImage: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop',
+                articleContent: `
+                    <p>Our advanced security measures ensure that your data remains protected at all times. This additional verification layer adds an extra level of security to your account.</p>
+                    <p>We use industry-standard encryption and security protocols to safeguard your information throughout the verification process.</p>
+                `
+            },
+            3: {
+                title: 'Third Verification Step',
+                description: 'Third verification step. Almost done!',
+                articleTitle: 'Privacy Protection',
+                articleImage: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&h=400&fit=crop',
+                articleContent: `
+                    <p>Your privacy is our top priority. We never share your personal information with third parties without your explicit consent.</p>
+                    <p>All verification data is encrypted and stored securely in compliance with international data protection regulations.</p>
+                `
+            },
+            4: {
+                title: 'Final Verification Step',
+                description: 'Final verification step. One more to go!',
+                articleTitle: 'Complete Your Access',
+                articleImage: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop',
+                articleContent: `
+                    <p>You're almost there! This is the final verification step. Once completed, you'll have full access to all features and services.</p>
+                    <p>Thank you for taking the time to complete our security verification process. Your account security is worth it!</p>
+                `
+            }
+        };
+
+        // =====================================================
+        // APPLICATION CODE - DO NOT EDIT BELOW THIS LINE
+        // =====================================================
+
+        let currentPage = 1;
+        let verificationCompleted = false;
+
+        function startVerification() {
+            const links = [null, EXTERNAL_LINKS.link1, EXTERNAL_LINKS.link2, EXTERNAL_LINKS.link3, EXTERNAL_LINKS.link4];
+            const link = links[currentPage];
+            window.open(link, '_blank');
+            
+            verificationCompleted = true;
+            checkUserReturn();
+        }
+
+        function checkUserReturn() {
+            window.addEventListener('focus', function onFocus() {
+                if (verificationCompleted) {
+                    showLoader();
+                    window.removeEventListener('focus', onFocus);
+                }
+            });
+        }
+
+        function showLoader() {
+            document.getElementById('verifyBtn').style.display = 'none';
+            
+            const loaderContainer = document.getElementById('loaderContainer');
+            loaderContainer.style.display = 'block';
+            
+            let timeLeft = COUNTDOWN_TIME;
+            const timerElement = document.getElementById('timer');
+            
+            const countdown = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    
+                    if (currentPage === 4) {
+                        showDownloadButton();
+                    } else {
+                        showContinueButton();
+                    }
+                }
+            }, 1000);
+        }
+
+        function showContinueButton() {
+            document.getElementById('loaderContainer').style.display = 'none';
+            
+            const continueSection = document.getElementById('continueSection');
+            continueSection.style.display = 'block';
+            
+            continueSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function showDownloadButton() {
+            document.getElementById('loaderContainer').style.display = 'none';
+            
+            const container = document.querySelector('.container');
+            const downloadSection = document.createElement('div');
+            downloadSection.className = 'download-section';
+            downloadSection.innerHTML = `
+                <div class="icon">🎉</div>
+                <h2>All Verifications Complete!</h2>
+                <p>Congratulations! You have successfully completed all verification steps. Click the download button below to access your file.</p>
+                <a href="${EXTERNAL_LINKS.link5}" target="_blank" class="btn btn-download"><span class="download-icon">📥</span> Download Now</a>
+            `;
+            
+            container.appendChild(downloadSection);
+            downloadSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function nextPage() {
+            currentPage++;
+            
+            if (currentPage > 4) {
+                return;
+            }
+            
+            verificationCompleted = false;
+            document.getElementById('currentStep').textContent = currentPage;
+            document.getElementById('verifyBtn').style.display = 'inline-block';
+            document.getElementById('loaderContainer').style.display = 'none';
+            document.getElementById('continueSection').style.display = 'none';
+            
+            updatePageContent();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updatePageContent() {
+            const content = PAGE_CONTENT[currentPage];
+            
+            if (content) {
+                document.getElementById('mainTitle').textContent = content.title;
+                document.getElementById('mainDescription').textContent = content.description;
+                document.getElementById('articleTitle').textContent = content.articleTitle;
+                document.getElementById('articleImage').src = content.articleImage;
+                document.getElementById('articleContent').innerHTML = content.articleContent;
+            }
+        }
+    </script>
+</body>
+</html>
